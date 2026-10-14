@@ -1,0 +1,8 @@
+# Fluxo de retorno automático validado: revisão do proprietário obrigatória.
+/src/App.tsx @gamberine
+/src/domain/journey.ts @gamberine
+/src/domain/journey.test.ts @gamberine
+/server/index.mjs @gamberine
+/server/punchPolicy.mjs @gamberine
+/server/punchPolicy.test.mjs @gamberine
+/docs/COMPORTAMENTOS-VALIDADOS.md @gamberine

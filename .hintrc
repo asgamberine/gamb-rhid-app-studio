@@ -1,0 +1,25 @@
+{
+  "connector": {
+    "name": "local",
+    "options": {
+      "pattern": [
+        "src/**",
+        "server/**",
+        "public/**",
+        "index.html",
+        "!.git/**",
+        "!dist/**",
+        "!tmp/**",
+        "!.data/**",
+        "!node_modules/**"
+      ],
+      "watch": false
+    }
+  },
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": "off"
+  }
+}

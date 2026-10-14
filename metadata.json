@@ -1,0 +1,11 @@
+{
+  "name": "Gamb RHiD Plus",
+  "description": "Gamb RHiD Plus - Maximizando a experiência do usuário no controle e gestão de jornada e pontos RHiD",
+  "requestFramePermissions": [
+    "geolocation",
+    "notifications"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,46 @@
+Options -Indexes
+DirectoryIndex index.html
+
+AddDefaultCharset UTF-8
+AddType application/manifest+json .webmanifest
+AddType application/javascript .js
+AddType image/svg+xml .svg
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Never expose hidden files or directories from this application folder.
+  RewriteRule (^|/)\. - [F,L]
+  RewriteRule "(?i)(^|/)(?:package(?:-lock)?\.json|session\.key|[^/]+\.(?:sqlite|sqlite3|db|bak|backup|log|map))$" - [F,L]
+
+  # Keep existing build artifacts addressable and fall back to the SPA shell.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+<FilesMatch "(?i)^(?:package(?:-lock)?\.json|\.env(?:\..*)?|session\.key)$|\.(?:sqlite|sqlite3|db|bak|backup|log|map)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; connect-src 'self' https://gambrhid-api.gamberine.com.br; font-src 'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; manifest-src 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self'"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set Permissions-Policy "camera=(), geolocation=(self), microphone=(), payment=(), usb=()"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+
+  <FilesMatch "(?i)^index\.html$">
+    Header always set Cache-Control "no-store"
+  </FilesMatch>
+  <FilesMatch "(?i)^(?:sw\.js|manifest\.webmanifest)$">
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "(?i)^(?!sw\.js$).+\.(?:css|js|ico|png|svg|woff|woff2)$">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
